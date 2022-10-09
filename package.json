@@ -1,0 +1,404 @@
+{
+	"name": "mql-tools",
+	"displayName": "MQL Tools",
+	"description": "Tools MetaQuotes Language 4/5",
+	"version": "0.1.0",
+	"publisher": "L-I-V",
+	"engines": {
+		"vscode": "^1.63.0"
+	},
+	"categories": [
+		"Programming Languages",
+		"Snippets",
+		"Other"
+	],
+	"keywords": [
+		"mql",
+		"mql4",
+		"mql5",
+		"mqh",
+		"mq4",
+		"mq5"
+	],
+	"icon": "images/mql_icon.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/L-I-V/MQL-Tools"
+	},
+	"activationEvents": [
+		"onLanguage:cpp",
+		"onCommand:mql_tools.compileScript",
+		"onCommand:mql_tools.checkFile",
+		"onCommand:mql_tools.compileFile",
+		"onCommand:mql_tools.help",
+		"onCommand:mql_tools.configurations",
+		"onCommand:mql_tools.Addicon",
+		"onCommand:mql_tools.Showfiles",
+		"onCommand:mql_tools.InsNameMQH",
+		"onCommand:mql_tools.InsMQH",
+		"onCommand:mql_tools.InsMQL",
+		"onCommand:mql_tools.InsNameMQL",
+		"onCommand:mql_tools.InsResource",
+		"onCommand:mql_tools.InsImport",
+		"onCommand:mql_tools.InsTime",
+		"onCommand:mql_tools.InsIcon",
+		"onCommand:mql_tools.commentary",
+		"onCommand:mql_tools.openInME"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"configuration": {
+			"title": "MQL Tools",
+			"properties": {
+				"mql_tools.LogFile.DeleteLog": {
+					"type": "boolean",
+					"default": true,
+					"description": "%mql_tools.configuration.DeleteLog.description%"
+				},
+				"mql_tools.Metaeditor.Metaeditor4Dir": {
+					"type": "string",
+					"default": "C:\\MT4_Install\\MetaTrader\\metaeditor.exe",
+					"description": "%mql_tools.configuration.Metaeditor4Dir.description%"
+				},
+				"mql_tools.Metaeditor.Metaeditor5Dir": {
+					"type": "string",
+					"default": "C:\\MT5_Install\\MetaTrader\\metaeditor.exe",
+					"description": "%mql_tools.configuration.Metaeditor5Dir.description%"
+				},
+				"mql_tools.Metaeditor.Include4Dir": {
+					"type": "string",
+					"default": "",
+					"description": "%mql_tools.configuration.Include4Dir.description%"
+				},
+				"mql_tools.Metaeditor.Include5Dir": {
+					"type": "string",
+					"default": "",
+					"description": "%mql_tools.configuration.Include5Dir.description%"
+				},
+				"mql_tools.LogFile.NameLog": {
+					"type": "string",
+					"default": "",
+					"description": "%mql_tools.configuration.LogDir.description%"
+				},
+				"mql_tools.ShowButton.Compile": {
+					"type": "boolean",
+					"default": true,
+					"description": "%mql_tools.configuration.ShowButtonCompile.description%"
+				},
+				"mql_tools.ShowButton.Check": {
+					"type": "boolean",
+					"default": true,
+					"description": "%mql_tools.configuration.ShowButtonCheck.description%"
+				},
+				"mql_tools.ShowButton.Script": {
+					"type": "boolean",
+					"default": true,
+					"description": "%mql_tools.configuration.ShowButtonScript.description%"
+				},
+				"mql_tools.Script.MiniME": {
+					"type": "boolean",
+					"default": true,
+					"description": "%mql_tools.configuration.MiniME.description%"
+				},
+				"mql_tools.Script.Timetomini": {
+					"type": "number",
+					"default": 500,
+					"minimum": 100,
+					"description": "%mql_tools.configuration.Timetomini.description%"
+				},
+				"mql_tools.Script.CloseME": {
+					"type": "boolean",
+					"default": true,
+					"description": "%mql_tools.configuration.CloseME.description%"
+				},
+				"mql_tools.Help.HelpON": {
+					"type": "boolean",
+					"default": true,
+					"description": "%mql_tools.configuration.HelpON.description%"
+				},
+				"mql_tools.Help.MQL4HelpLanguage": {
+					"type": "string",
+					"default": "Default",
+					"enum": [
+						"Default",
+						"Русский",
+						"English"
+					],
+					"description": "%mql_tools.configuration.MQL4HelpLanguage.description%"
+				},
+				"mql_tools.Help.MQL5HelpLanguage": {
+					"type": "string",
+					"default": "Default",
+					"enum": [
+						"Default",
+						"Русский",
+						"German",
+						"Spanish",
+						"French",
+						"Chinese",
+						"Italian",
+						"Portuguese",
+						"Turkish",
+						"Japanese",
+						"English"
+					],
+					"description": "%mql_tools.configuration.MQL5HelpLanguage.description%"
+				},
+				"mql_tools.Help.HelpVal": {
+					"type": "number",
+					"default": 500,
+					"minimum": 150,
+					"description": "%mql_tools.configuration.HelpVal.description%"
+				},
+				"mql_tools.context": {
+					"type": "boolean",
+					"default": false,
+					"markdownDeprecationMessage": "%mql_tools.configuration.context%"
+				}
+			}
+		},		
+		"languages": [
+			{
+				"id": "cpp",
+				"extensions": [
+					".mq4",
+					".mq5",
+					".mqh"
+				],
+				"configuration": "./syntaxes/mql.configuration.json"
+			},			
+			{
+				"id": "mql-output",
+				"mimetypes": [
+					"text/x-code-output"
+				]
+			}
+		],
+		"grammars": [
+			{
+				"language": "cpp",
+				"scopeName": "source.mql",
+				"path": "./syntaxes/mql.tmLanguage"
+			},
+			{
+				"language": "mql-output",
+				"scopeName": "mql.output",
+				"path": "./syntaxes/mql.out.tmLanguage"
+			}
+		],		
+		"commands": [
+			{
+				"command": "mql_tools.compileScript",
+				"title": "%mql_tools.commands.compileScript.title%",
+				"category": "MQL",
+				"icon": {
+					"dark": "./media/script_dark.svg",
+					"light": "./media/script_light.svg"
+				}
+			},
+			{
+				"command": "mql_tools.compileFile",
+				"title": "%mql_tools.commands.compileFile.title%",
+				"category": "MQL",
+				"icon": {
+					"dark": "./media/compile_dark.svg",
+					"light": "./media/compile_light.svg"
+				}
+			},
+			{
+				"command": "mql_tools.checkFile",
+				"title": "%mql_tools.commands.checkFile.title%",
+				"category": "MQL",
+				"icon": {
+					"dark": "./media/check_dark.svg",
+					"light": "./media/check_light.svg"
+				}
+			},
+			{
+				"command": "mql_tools.help",
+				"title": "%mql_tools.commands.help.title%",
+				"category": "MQL"
+			},
+			{
+				"command": "mql_tools.configurations",
+				"title": "%mql_tools.commands.configurations.title%",
+				"category": "MQL"
+			},
+			{
+				"command": "mql_tools.Addicon",
+				"title": "%mql_tools.commands.Addicon.title%",
+				"category": "MQL"
+			},
+			{
+				"command": "mql_tools.Showfiles",
+				"title": "%mql_tools.commands.Showfiles.title%"
+			},
+			{
+				"command": "mql_tools.InsNameMQL",
+				"title": "%mql_tools.commands.InsNameMQL.title%"
+			},
+			{
+				"command": "mql_tools.InsMQL",
+				"title": "%mql_tools.commands.InsNameMQL.title%"
+			},
+			{
+				"command": "mql_tools.InsNameMQH",
+				"title": "%mql_tools.commands.InsNameMQH.title%"
+			},
+			{
+				"command": "mql_tools.InsMQH",
+				"title": "%mql_tools.commands.InsNameMQH.title%"
+			},
+			{
+				"command": "mql_tools.InsResource",
+				"title": "%mql_tools.commands.InsResource.title%"
+			},
+			{
+				"command": "mql_tools.InsImport",
+				"title": "%mql_tools.commands.InsImport.title%"
+			},
+			{
+				"command": "mql_tools.InsTime",
+				"title": "%mql_tools.commands.InsTime.title%"
+			},
+			{
+				"command": "mql_tools.InsIcon",
+				"title": "%mql_tools.commands.InsIcon.title%"
+			},
+			{
+				"command": "mql_tools.commentary",
+				"title": "%mql_tools.commands.createCommentary.title%"
+			},
+			{
+				"command": "mql_tools.openInME",
+				"title": "%mql_tools.commands.openInME.title%"
+			}
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "resourceExtname == .mq4 || resourceExtname == .mq5 || resourceExtname == .mqh",
+					"submenu": "mql_tools.commentary.context",
+					"group": "mql"
+				}
+			],
+			"editor/title": [
+				{
+					"when": "resourceExtname == .mq4 && config.mql_tools.ShowButton.Script == true || resourceExtname == .mq5 && config.mql_tools.ShowButton.Script == true || resourceExtname == .mqh && config.mql_tools.ShowButton.Script == true",
+					"command": "mql_tools.compileScript",
+					"group": "navigation"
+				},
+				{
+					"when": "resourceExtname == .mq4 && config.mql_tools.ShowButton.Compile == true || resourceExtname == .mq5 && config.mql_tools.ShowButton.Compile == true || resourceExtname == .mqh && config.mql_tools.ShowButton.Compile == true",
+					"command": "mql_tools.compileFile",
+					"group": "navigation"
+				},
+				{
+					"when": "resourceExtname == .mq4 && config.mql_tools.ShowButton.Check == true|| resourceExtname == .mq5 && config.mql_tools.ShowButton.Check == true || resourceExtname == .mqh && config.mql_tools.ShowButton.Check == true",
+					"command": "mql_tools.checkFile",
+					"group": "navigation"
+				}
+			],			
+			"explorer/context": [
+				{
+					"when": "config.mql_tools.context == true",
+					"command": "mql_tools.Showfiles",
+					"group": "z_commands"
+				},			
+				{
+					"when": "resourceExtname == .mq4 || resourceExtname == .mq5 || resourceExtname == .mqh",
+					"command": "mql_tools.openInME",
+					"group": "z_commands"
+				},
+				{
+					"when": "resourceExtname == .mqh",
+					"command": "mql_tools.InsNameMQH",
+					"group": "z_commands"
+				},
+				{
+					"when": "resourceExtname == .mq4 || resourceExtname == .mq5",
+					"command": "mql_tools.InsNameMQL",
+					"group": "z_commands"
+				}
+			],
+			"mql_tools.commentary.context":[
+				{
+					"command": "mql_tools.commentary",
+					"group": "comment"
+				},
+				{
+					"command": "mql_tools.InsMQH",
+					"group": "insert"
+				},
+				{
+					"command": "mql_tools.InsResource",
+					"group": "insert"
+				},
+				{
+					"command": "mql_tools.InsImport",
+					"group": "insert"
+				},
+				{
+					"command": "mql_tools.InsTime",
+					"group": "insert"
+				},
+				{
+					"command": "mql_tools.InsIcon",
+					"group": "insert"
+				},
+				{
+					"when": "resourceExtname == .mqh",
+					"command": "mql_tools.InsMQL",
+					"group": "insert"
+				}
+			]
+		},
+		"submenus": [			
+			{
+				"id": "mql_tools.commentary.context",
+				"label": "MQL Tools"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "mql_tools.compileFile",
+				"key": "ctrl+shift+x",
+				"when": "resourceExtname == .mq4 || resourceExtname == .mq5 || resourceExtname == .mqh"
+			},
+			{
+				"command": "mql_tools.checkFile",
+				"key": "ctrl+shift+z",
+				"when": "resourceExtname == .mq4 || resourceExtname == .mq5 || resourceExtname == .mqh"
+			},
+			{
+				"command": "mql_tools.compileScript",
+				"key": "ctrl+shift+c",
+				"when": "resourceExtname == .mq4 || resourceExtname == .mq5 || resourceExtname == .mqh"
+			},
+			{
+				"command": "mql_tools.help",
+				"key": "F1",
+				"when": "config.mql_tools.Help.HelpON == true && resourceExtname == .mq4 || config.mql_tools.Help.HelpON == true && resourceExtname == .mq5 || config.mql_tools.Help.HelpON == true && resourceExtname == .mqh"
+			}
+		]
+	},
+	"extensionDependencies": [
+		"ms-vscode.cpptools"
+	],
+	"scripts": {
+		"lint": "eslint .",
+		"pretest": "npm run lint",
+		"test": "node ./test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.4",
+		"@types/mocha": "^9.0.0",
+		"@types/node": "14.x",
+		"@types/vscode": "^1.63.0",
+		"@vscode/test-electron": "^1.6.2",
+		"eslint": "^8.1.0",
+		"glob": "^7.1.7",
+		"mocha": "^9.1.3",
+		"typescript": "^4.4.4"
+	}
+}
