@@ -7,6 +7,10 @@ const obj_items = require('../data/items.json');
 const colorW = require('../data/color.json')
 const language = vscode.env.language;
 
+const groupFunctions = 2;
+const groupKeywords = 13;
+const groupColors = 15;
+const groupConstants = 20;
 
 function Hover_log() {
     return {
@@ -66,7 +70,7 @@ function Hover_MQL() {
                 word = document.getText(range);
 
             if (!(word in obj_items)) return undefined;
-            if (obj_items[word].group !== 2) return undefined;
+            if (![groupFunctions, groupConstants].includes(obj_items[word].group)) return undefined;
             const example = (typeof obj_items[word].code.map(match => match.label)[0] == 'undefined') ? '' : obj_items[word].code.map(match => match.label+'\n').join('\n'),
                 dl = obj_items[word].description[loclang] ? obj_items[word].description[loclang] : obj_items[word].description.en,
                 description = (typeof dl == 'undefined') ? '' : dl,
@@ -105,7 +109,7 @@ function ItemProvider() {
                     item.detail = match.description[loclang] ? match.description[loclang] : match.description.en;
                     const contents = new vscode.MarkdownString();
                     contents.appendCodeblock(match.code.map(match => match.label)[0]);
-                    if (match.group === 15) {
+                    if (match.group === groupColors) {
                         if (match.label in colorW) {
                             let clrRGB = colorW[match.label].split(',');                          
                             contents.appendMarkdown(
@@ -151,7 +155,8 @@ function HelpProvider () {
 
             if (!(FunctionName in obj_items)) 
                 return undefined;
-            if (obj_items[FunctionName].group !== 2) 
+            //if (obj_items[FunctionName].group !== groupFunctions) 
+            if (![groupFunctions, groupConstants].includes(obj_items[FunctionName].group)) 
                 return undefined;
 
             const sig = new vscode.SignatureHelp();
