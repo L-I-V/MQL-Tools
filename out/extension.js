@@ -117,7 +117,7 @@ function Compile(rt) {
 
                 childProcess.exec(command, (err, stdout, stderror) => {
 
-                    if (stderror && os != 'linux') {
+                    if (stderror && os !== 'linux') {
                         return resolve(), outputChannel.appendLine(`[Error]  ${lg['editor64']} ${CommM} [${MetaDir}] \n[Warning] ${lg['editor64to']} [${Pm}\\${(Nm === 'metaeditor.exe' ? 'metaeditor64.exe' : 'metaeditor.exe')}]`);
                     }
 
