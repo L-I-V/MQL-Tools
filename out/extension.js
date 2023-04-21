@@ -102,10 +102,6 @@ function Compile(rt) {
                     logFile = path.replace(fileName, fileName.match(/.+(?=\.)/) + '.log');
                 }
 
-                if (os === 'win32') {
-                command = `"${MetaDir}" /compile:"${path}"${includefile}${rt === 1 || (rt === 2 && cme) ? '' : ' /s'} /log:"${logFile}"`;
-                }
-
                 if (os === 'linux') {
                     let DirAbsPath, CompRelPath, FileRelPath, IncRelPath, LogRelPath;
                     DirAbsPath = pathModule.dirname(MetaDir);
@@ -117,9 +113,11 @@ function Compile(rt) {
                     command = `cd "${DirAbsPath}" && wine "${CompRelPath}" /compile:"${FileRelPath}" /include:"${IncRelPath}"${rt === 1 || (rt === 2 && cme) ? "" : " /s"} /log:"${LogRelPath}"`;
                     }
 
+                else {command = `"${MetaDir}" /compile:"${path}"${includefile}${rt === 1 || (rt === 2 && cme) ? '' : ' /s'} /log:"${logFile}"`;}
+
                 childProcess.exec(command, (err, stdout, stderror) => {
 
-                    if (stderror && os !== 'linux') {
+                    if (stderror && os != 'linux') {
                         return resolve(), outputChannel.appendLine(`[Error]  ${lg['editor64']} ${CommM} [${MetaDir}] \n[Warning] ${lg['editor64to']} [${Pm}\\${(Nm === 'metaeditor.exe' ? 'metaeditor64.exe' : 'metaeditor.exe')}]`);
                     }
 
