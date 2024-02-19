@@ -48182,13 +48182,13 @@
             "en": "Keyword."
         }
     },
-    "namespase": {
+    "namespace": {
         "group": 13,
-        "label": "namespase",
-        "body": "namespase",
+        "label": "namespace",
+        "body": "namespace",
         "code": [
             {
-                "label": "namespase",
+                "label": "namespace",
                 "description": {
                     "ru": "",
                     "en": ""
