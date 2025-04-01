@@ -12,7 +12,7 @@ const { IconsInstallation } = require("./addIcon");
 const { Hover_log, DefinitionProvider, Hover_MQL, ItemProvider, HelpProvider, ColorProvider } = require("./provider");
 const { Cpp_prop, CreateProperties } = require("./createProperties");
 const outputChannel = vscode.window.createOutputChannel('MQL', 'mql-output');
-
+const os = process.platform;
 
 try {
     var lg = require(`../landes.${language}.json`);
@@ -102,11 +102,22 @@ function Compile(rt) {
                     logFile = path.replace(fileName, fileName.match(/.+(?=\.)/) + '.log');
                 }
 
-                command = `"${MetaDir}" /compile:"${path}"${includefile}${rt === 1 || (rt === 2 && cme) ? '' : ' /s'} /log:"${logFile}"`;
+                if (os === 'linux') {
+                    let DirAbsPath, CompRelPath, FileRelPath, IncRelPath, LogRelPath;
+                    DirAbsPath = pathModule.dirname(MetaDir);
+                    CompRelPath = pathModule.relative(DirAbsPath, MetaDir);
+                    FileRelPath = pathModule.relative(DirAbsPath, path);
+                    IncRelPath = pathModule.relative(DirAbsPath, incDir);
+                    LogRelPath = pathModule.relative(DirAbsPath, logFile);
+
+                    command = `cd "${DirAbsPath}" && wine "${CompRelPath}" /compile:"${FileRelPath}" /include:"${IncRelPath}"${rt === 1 || (rt === 2 && cme) ? "" : " /s"} /log:"${LogRelPath}"`;
+                    }
+
+                else {command = `"${MetaDir}" /compile:"${path}"${includefile}${rt === 1 || (rt === 2 && cme) ? '' : ' /s'} /log:"${logFile}"`;}
 
                 childProcess.exec(command, (err, stdout, stderror) => {
 
-                    if (stderror) {
+                    if (stderror && os !== 'linux') {
                         return resolve(), outputChannel.appendLine(`[Error]  ${lg['editor64']} ${CommM} [${MetaDir}] \n[Warning] ${lg['editor64to']} [${Pm}\\${(Nm === 'metaeditor.exe' ? 'metaeditor64.exe' : 'metaeditor.exe')}]`);
                     }
 
